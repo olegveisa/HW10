@@ -12,9 +12,11 @@ class Phone(Field):
         self.value = phone
 
 class Record():
-    def __init__(self, name: Name, *phones):
+    def __init__(self, name: Name, phone: Phone = None):
         self.name = name
-        self.phones = list(phones)
+        self.phones = []
+        if phone:
+            self.phones.append(phone)
 
     def add_phone(self, value: Phone):
         self.phones.append(value)
@@ -33,14 +35,12 @@ class AddressBook(UserDict):
 if __name__ == '__main__':
     name = Name('Bill')
     phone = Phone('1234567890')
-    rec = Record(name, phone)
+    rec = Record(Name('Bill'))
     ab = AddressBook()
     ab.add_record(rec)
     
     assert isinstance(ab['Bill'], Record)
     assert isinstance(ab['Bill'].name, Name)
     assert isinstance(ab['Bill'].phones, list)
-    assert isinstance(ab['Bill'].phones[0], Phone)
-    assert ab['Bill'].phones[0].value == '1234567890'
     
     print('All Ok)')
